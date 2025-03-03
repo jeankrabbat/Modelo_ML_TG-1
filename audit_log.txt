@@ -1,0 +1,4 @@
+2025-03-02 22:11:59,690 - Datos extraídos con éxito.
+2025-03-02 22:11:59,775 - Backup fue realizado con éxito en backup_data.csv
+2025-03-02 22:12:00,678 - Datos cifrados correctamente.
+2025-03-02 22:12:00,858 - Datos procesados guardados en datos_procesados.csv
