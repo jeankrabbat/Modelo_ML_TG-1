@@ -72,8 +72,6 @@ def main(role="admin"):
 
         # Cifrar datos sensibles (en este caso ID de la persona, limit bal y edad)
         df["ID"] = df["ID"].astype(str).apply(encrypt_data)
-        df["LIMIT_BAL"] = df["LIMIT_BAL"].astype(str).apply(encrypt_data)
-        df["AGE"] = df["AGE"].astype(str).apply(encrypt_data)
 
         logging.info("Datos cifrados correctamente.")
 
