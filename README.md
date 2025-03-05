@@ -1,4 +1,4 @@
-# Proyecto: Predicción de Incumplimiento de Pago con IA
+# Predicción de Incumplimiento de Pago con IA
 
 ## Descripción
 
