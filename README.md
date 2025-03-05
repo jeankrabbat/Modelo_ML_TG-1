@@ -67,6 +67,51 @@ Este proyecto tiene como objetivo desarrollar un sistema que permita predecir el
 
 
 
+---
+
+## 2. Documentación Técnica
+
+### Arquitectura del Data Pipeline
+El Data Pipeline se compone de los siguientes módulos:
+- **Extracción de Datos:**  
+  Se utiliza la API de Kaggle para descargar el dataset `default-of-credit-card-clients`. Una vez descargado, el archivo ZIP se descomprime y se elimina el archivo comprimido.
+  
+- **Procesamiento y Backup:**  
+  Los datos se cargan en un DataFrame de Pandas. Se realiza un backup de los datos originales en formato CSV (`backup_data.csv`) y se registra la acción en un log de auditoría (`audit_log.txt`).
+
+- **Limpieza y Transformación:**  
+  Aunque en el código se encuentran comentadas algunas operaciones de limpieza (como eliminación de duplicados y manejo de valores nulos), se implementa la transformación necesaria para asegurar la integridad del dataset.
+
+- **Seguridad y Cifrado:**  
+  Se utiliza `cryptography.fernet` para cifrar datos sensibles (por ejemplo, el campo `ID`). Además, se implementa un sistema de roles definido en `config.json` para controlar el acceso al pipeline.
+
+### Integración del Modelo de IA
+La integración del modelo se realiza a través de la aplicación desarrollada en Streamlit:
+- **Carga del Modelo:**  
+  El modelo de IA entrenado se carga mediante `joblib` desde el archivo `modelo_entrenado.pkl`.
+  
+- **Predicción:**  
+  Se define una función en `app.py` que recibe los datos de entrada y, a partir de ellos, realiza una predicción junto con la probabilidad de default.  
+  La app permite:
+  - Ingresar datos manualmente a través de la interfaz.
+  - Cargar un archivo CSV para realizar predicciones en lotes.
+  
+- **Interfaz de Usuario:**  
+  La aplicación muestra los resultados de la predicción, tanto de manera individual como en lote, y permite descargar los resultados en un CSV.
+
+### Decisiones de Diseño: Seguridad, Criptografía y Limpieza de Datos
+- **Seguridad y Criptografía:**  
+  - **Cifrado con Fernet:** Se eligió `cryptography.fernet` por su facilidad de uso y robustez en el cifrado simétrico, lo que permite proteger datos sensibles.
+  - **Control de Acceso:** Se implementa un sistema de roles (configurado en `config.json`) para restringir la ejecución del pipeline a usuarios autorizados.
+  - **Logging:** Cada acción relevante se registra en `audit_log.txt` para permitir auditorías y monitoreo de la actividad.
+
+- **Limpieza de Datos:**  
+  - Se prevé la implementación de técnicas de limpieza como eliminación de duplicados y tratamiento de valores nulos para asegurar la calidad de los datos.
+  - Estas operaciones son fundamentales para que el modelo de IA reciba información precisa y sin inconsistencias.
+
+- **Backup de Datos:**  
+  - Se realiza un backup de los datos originales antes de proceder con cualquier transformación, lo que facilita la recuperación en caso de errores durante el procesamiento.
+
 
 
 
